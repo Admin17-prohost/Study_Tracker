@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+
+    <title>Study Tracker</title>
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="assets/favicon-32x32.png"
+    />
+    <link rel="stylesheet" href="style.css" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <script
+      src="https://kit.fontawesome.com/0db88a9e7d.js"
+      crossorigin="anonymous"
+    ></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+
+  <body>
+    <div class="wrapper">
+      <header>
+        <div class="title">
+          <img src="assets/logo.png" class="logo" />
+          <h1>Study Tracker</h1>
+        </div>
+
+        <div class="top">
+          <div class="stat">
+            ⚡ XP :
+
+            <span id="xp"> 0 </span>
+          </div>
+
+          <div class="stat">
+            🏆
+
+            <span id="level"> Beginner </span>
+          </div>
+        </div>
+      </header>
+
+      <div class="layout">
+        <!-- LEFT -->
+
+        <section class="left">
+          <h3>Level Progress</h3>
+
+          <div class="progress">
+            <div id="bar" class="fill"></div>
+          </div>
+
+          <label> Date </label>
+
+          <input id="date" type="date" />
+
+          <label> Topic </label>
+
+          <select id="topic">
+            <option>JavaScript</option>
+
+            <option>React</option>
+          </select>
+
+          <h3>Study Time</h3>
+
+          <div class="time">
+            <div>
+              <label> Hours </label>
+
+              <div class="counter">
+                <button onclick="changeHour(-1)">−</button>
+
+                <input id="hours" value="1" readonly />
+
+                <button onclick="changeHour(1)">+</button>
+              </div>
+            </div>
+
+            <div>
+              <label> Minutes </label>
+
+              <div class="counter">
+                <button onclick="changeMin(-15)">−</button>
+
+                <input id="minutes" value="0" readonly />
+
+                <button onclick="changeMin(15)">+</button>
+              </div>
+            </div>
+          </div>
+
+          <label> What did you learn? </label>
+
+          <textarea id="notes"> </textarea>
+
+          <button class="save" onclick="saveStudy()">💾 Save Study</button>
+
+          <h3>Badges</h3>
+
+          <div id="badges"></div>
+        </section>
+
+        <!-- RIGHT -->
+
+        <section class="right">
+          <div class="history-top">
+            <h2>History</h2>
+
+            <div>
+              <button onclick="setView('card')">Card</button>
+
+              <button onclick="setView('table')">Table</button>
+            </div>
+          </div>
+
+          <div id="history"></div>
+        </section>
+      </div>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
