@@ -14,198 +14,449 @@ const dateEl = document.getElementById("date")
 const topicEl = document.getElementById("topic")
 const hoursEl = document.getElementById("hours")
 const minutesEl = document.getElementById("minutes")
+const sourceInput = document.getElementById("source")
 const notesEl = document.getElementById("notes")
 
-dateEl.value = new Date().toISOString().split("T")[0]
+dateEl.value =
+new Date()
+.toISOString()
+.split("T")[0]
 
-/* ---------------- XP ---------------- */
+function calculateXP(){
 
-function calculateXP() {
-let xp = 0
+let xp=0
 
-study.forEach(item => {
-let gain =
-(item.hours + item.minutes / 60) * 10
+study.forEach(item=>{
 
-if (item.topic === "React") gain += 5
+let gain=
+(item.hours+(item.minutes/60))*10
 
-xp += Math.round(gain)
+if(item.topic==="React")
+gain+=5
+
+xp+=Math.round(gain)
+
 })
 
 return xp
+
 }
 
-/* ---------------- LEVEL ---------------- */
+function getLevel(xp){
 
-function getLevel(xp) {
-if (xp >= 500) return "Pro 👑"
-if (xp >= 250) return "Intermediate 🔥"
-if (xp >= 100) return "Learner 🚀"
+if(xp>=500)
+return "Pro 👑"
+
+if(xp>=250)
+return "Intermediate 🔥"
+
+if(xp>=100)
+return "Learner 🚀"
+
 return "Beginner 🌱"
+
 }
 
-/* ---------------- COUNTERS ---------------- */
+function changeHour(v){
 
-function changeHour(v) {
-let h = Number(hoursEl.value)
-h += v
-if (h < 0) h = 0
-if (h > 12) h = 12
-hoursEl.value = h
+let h=
+Number(hoursEl.value)
+
+h+=v
+
+if(h<0)h=0
+
+if(h>12)h=12
+
+hoursEl.value=h
+
 }
 
-function changeMin(v) {
-let m = Number(minutesEl.value)
-m += v
-if (m < 0) m = 0
-if (m > 45) m = 45
-minutesEl.value = m
+function changeMin(v){
+
+let m=
+Number(minutesEl.value)
+
+m+=v
+
+if(m<0)m=0
+
+if(m>45)m=45
+
+minutesEl.value=m
+
 }
 
-/* ---------------- SAVE ---------------- */
+function saveStudy(){
 
-function saveStudy() {
-let h = Number(hoursEl.value)
-let m = Number(minutesEl.value)
+let h=
+Number(hoursEl.value)
 
-if (h === 0 && m === 0) {
-alert("Add study time da 😏")
+let m=
+Number(minutesEl.value)
+
+if(h===0&&m===0){
+
+alert("Add study time")
+
 return
+
 }
 
 study.push({
-date: dateEl.value,
-topic: topicEl.value,
-hours: h,
-minutes: m,
-notes: notesEl.value
+
+date:
+dateEl.value,
+
+topic:
+topicEl.value,
+
+hours:h,
+
+minutes:m,
+
+source:
+sourceInput.value,
+
+notes:
+notesEl.value
+
 })
 
-localStorage.setItem("study", JSON.stringify(study))
+localStorage.setItem(
+"study",
+JSON.stringify(study)
+)
 
-hoursEl.value = 1
-minutesEl.value = 0
-notesEl.value = ""
+hoursEl.value=1
+minutesEl.value=0
+
+sourceInput.value=""
+notesEl.value=""
 
 render()
+
 }
 
-/* ---------------- DELETE ---------------- */
+function deleteStudy(index){
 
-function deleteStudy(index) {
-study.splice(index, 1)
-localStorage.setItem("study", JSON.stringify(study))
+study.splice(index,1)
+
+localStorage.setItem(
+"study",
+JSON.stringify(study)
+)
+
 render()
+
 }
 
-/* ---------------- BADGES ---------------- */
+function getBadges(){
 
-function getBadges() {
-let total = 0
+let total=0
 
-study.forEach(x => {
-total += x.hours + x.minutes / 60
+study.forEach(x=>{
+
+total+=
+x.hours+
+(
+x.minutes/60
+)
+
 })
 
-let list = []
+let list=[]
 
-if (total >= 1) list.push("🟡 Starter")
-if (total >= 10) list.push("⚡ Warrior")
-if (total >= 25) list.push("🔥 Master")
-if (total >= 50) list.push("👑 Legend")
+if(total>=1)
+list.push("🟡 Starter")
+
+if(total>=10)
+list.push("⚡ Warrior")
+
+if(total>=25)
+list.push("🔥 Master")
+
+if(total>=50)
+list.push("👑 Legend")
 
 return list
+
 }
 
-/* ---------------- VIEW ---------------- */
+function setView(type){
 
-function setView(type) {
-currentView = type
-localStorage.setItem("view", type)
+currentView=type
+
+localStorage.setItem(
+"view",
+type
+)
+
 render()
+
 }
 
-/* ---------------- RENDER ---------------- */
+function render(){
 
-function render() {
-let xp = calculateXP()
+let xp=
+calculateXP()
 
-xpEl.textContent = xp
-levelEl.textContent = getLevel(xp)
+xpEl.textContent=
+xp
 
-barEl.style.width =
-Math.min((xp / 500) * 100, 100) + "%"
+levelEl.textContent=
+getLevel(xp)
 
-/* badges */
-badgesEl.innerHTML =
+barEl.style.width=
+Math.min(
+(xp/500)*100,
+100
+)+"%"
+
+badgesEl.innerHTML=
+
 getBadges()
-.map(b => `<span class="badge">${b}</span>`)
+
+.map(
+b=>
+
+`<span class="badge">
+
+${b}
+
+</span>`
+
+)
+
 .join("")
 
-/* history */
-historyEl.innerHTML = ""
+historyEl.innerHTML=""
 
-let list = [...study].reverse()
+let list=
+[...study]
+.reverse()
 
-if (currentView === "card") {
+if(
+currentView==="card"
+){
 
-list.forEach((item, i) => {
-historyEl.innerHTML += `
+list.forEach(
+(item,i)=>{
+
+historyEl.innerHTML+=`
+
 <div class="card">
-<div class="meta">
-📅 ${item.date}
+
+<div>
+
+📅
+${item.date}
+
 </div>
 
-<div class="title">
+<div>
+
 ${item.topic}
+
 </div>
 
-<div class="time">
-⏰ ${item.hours} hr ${item.minutes} min
+<div>
+
+⏰
+${item.hours}
+hr
+
+${item.minutes}
+min
+
 </div>
 
-<div class="note">
+${
+item.source
+
+?
+
+`
+
+<a
+href="${item.source}"
+target="_blank"
+class="source">
+
+🔗 Open Source
+
+</a>
+
+`
+
+:
+
+""
+
+}
+
+<div>
+
 ${item.notes}
+
 </div>
 
-<button onclick="deleteStudy(${study.length - 1 - i})" class="delete">
-<i class="fa-regular fa-trash-can"></i> Delete
+<button
+
+onclick=
+
+"deleteStudy(
+
+${study.length-1-i}
+
+)"
+
+class="delete">
+
+🗑 Delete
+
 </button>
 
 </div>
+
 `
+
 })
 
-} else {
+}
 
-historyEl.innerHTML = `
+else{
+
+historyEl.innerHTML=`
+
 <table class="table">
+
 <tr>
-<th>Date</th>
-<th>Topic</th>
-<th>Time</th>
-<th>Notes</th>
-<th>Action</th>
+
+<th>
+Date
+</th>
+
+<th>
+Topic
+</th>
+
+<th>
+Time
+</th>
+
+<th>
+Source
+</th>
+
+<th>
+Notes
+</th>
+
+<th>
+Action
+</th>
+
 </tr>
 
-${list.map((item, i) => `
+${
+
+list
+
+.map(
+(item,i)=>`
+
 <tr>
-<td>${item.date}</td>
-<td>${item.topic}</td>
-<td>${item.hours}h ${item.minutes}m</td>
-<td>${item.notes}</td>
+
 <td>
-<button onclick="deleteStudy(${study.length - 1 - i})" class="delete">
-<i class="fa-regular fa-trash-can"></i>
-</button>
+
+${item.date}
+
 </td>
+
+<td>
+
+${item.topic}
+
+</td>
+
+<td>
+
+${item.hours}h
+
+${item.minutes}m
+
+</td>
+
+<td>
+
+${
+item.source
+
+?
+
+`
+
+<a
+href="${item.source}"
+target="_blank">
+
+🔗 Open
+
+</a>
+
+`
+
+:
+
+"-"
+
+}
+
+</td>
+
+<td>
+
+${item.notes}
+
+</td>
+
+<td>
+
+<button
+
+onclick=
+
+"deleteStudy(
+
+${study.length-1-i}
+
+)"
+
+class="delete">
+
+🗑
+
+</button>
+
+</td>
+
 </tr>
-`).join("")}
+
+`
+
+)
+
+.join("")
+
+}
 
 </table>
+
 `
-}
+
 }
 
-/* INIT */
+}
+
 render()

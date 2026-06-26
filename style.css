@@ -299,6 +299,24 @@ text-align:center;
 
 }
 
+.source{
+
+display:inline-block;
+
+margin-top:10px;
+
+color:#38bdf8;
+
+text-decoration:none;
+
+}
+
+.source:hover{
+
+text-decoration:underline;
+
+}
+
 .save{
 
 width:100%;
@@ -440,6 +458,87 @@ border-bottom:
 .table th{
 
 color:#38bdf8;
+
+}
+/* FOOTER */
+
+.footer{
+
+margin-top:30px;
+
+padding:18px;
+
+text-align:center;
+
+background:
+
+rgba(
+17,
+24,
+39,
+0.85
+);
+
+border:
+
+1px solid
+rgba(
+255,
+255,
+255,
+0.05
+);
+
+border-radius:18px;
+
+backdrop-filter:
+
+blur(
+10px
+);
+
+color:
+
+#cbd5e1;
+
+font-size:14px;
+
+}
+
+
+.footer p{
+
+letter-spacing:.5px;
+
+}
+
+
+.footer:hover{
+
+box-shadow:
+
+0 0 25px
+rgba(
+56,
+189,
+248,
+0.12
+);
+
+}
+
+
+@media(
+max-width:600px
+){
+
+.footer{
+
+font-size:12px;
+
+padding:14px;
+
+}
 
 }
 
